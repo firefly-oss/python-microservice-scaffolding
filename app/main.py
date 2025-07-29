@@ -7,11 +7,11 @@ configures logging, metrics, and registers API routes.
 from typing import Dict, Any  # Standard library imports for type hints
 
 # FastAPI framework imports
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware  # For handling Cross-Origin Resource Sharing
-from fastapi.responses import JSONResponse
 
 # Application-specific imports
+from app.api.api_v1.api import api_router  # Router containing all API endpoints
 from app.core.config import settings  # Application configuration settings
 from app.core.logging import configure_logging, get_logger  # Logging utilities
 from app.core.metrics import setup_metrics  # Prometheus metrics setup
@@ -98,9 +98,8 @@ def liveness_check() -> Dict[str, str]:
     """
     return {"status": "alive"}
 
-# Import and include API routers
+# Include API routers
 # This registers all the API endpoints defined in the api_v1 module
-from app.api.api_v1.api import api_router
 app.include_router(
     api_router,  # Router containing all API endpoints
     prefix=settings.API_V1_STR  # Prefix all routes with the API version (e.g., /api/v1)
@@ -110,4 +109,4 @@ app.include_router(
 if __name__ == "__main__":
     import uvicorn  # ASGI server for running FastAPI applications
     # Run the application with uvicorn, enabling hot reloading for development
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)

@@ -6,15 +6,15 @@ including creating, reading, updating, and deleting items.
 It uses the service layer to separate API handling from business logic.
 """
 
-from typing import Any, List, Dict, Optional, Union  # Type hints
+from typing import Any, List, Optional, Union  # Type hints
 
 # FastAPI imports
-from fastapi import APIRouter, Depends, HTTPException, Query  # API routing and dependencies
+from fastapi import APIRouter, Depends, HTTPException  # API routing and dependencies
 from pydantic import BaseModel  # For response models
 from sqlalchemy.orm import Session  # Database session
 
 # Application imports
-from app import models, schemas  # Models and schemas
+from app import schemas  # Schemas
 from app.db.database import get_db  # Database session dependency
 from app.services import item_service  # Item service functions
 
@@ -77,7 +77,9 @@ def read_items(
 
     # Format response based on pagination flag
     if with_pagination:
-        items, pagination = result
+        # Type assertion for mypy
+        items_and_pagination: tuple[list[schemas.Item], dict[str, Any]] = result  # type: ignore
+        items, pagination = items_and_pagination
         return {
             "items": items,
             "total": pagination["total"],

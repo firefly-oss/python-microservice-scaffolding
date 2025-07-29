@@ -47,7 +47,7 @@ class ItemCreate(ItemBase):
     pass  # No additional fields required for item creation
 
 
-class ItemUpdate(ItemBase):
+class ItemUpdate(BaseModel):
     """
     Schema for updating an existing Item.
 
@@ -56,10 +56,11 @@ class ItemUpdate(ItemBase):
 
     Attributes:
         name: The name of the item (optional for updates)
+        description: A detailed description of the item (optional)
         is_active: Flag indicating if the item is active (optional for updates)
-        description: Inherited from ItemBase, already optional
     """
     name: Optional[str] = None  # Optional for updates
+    description: Optional[str] = None  # Optional field with default None
     is_active: Optional[bool] = None  # Optional for updates
 
 
