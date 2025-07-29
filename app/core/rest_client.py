@@ -32,12 +32,11 @@ Example:
     created_user = client.post("/users", json=new_user, response_model=User)
     ```
 """
-from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union, cast
-import logging
+from typing import Any, Dict, Optional, Type, TypeVar, Union
 from urllib.parse import urljoin
 
 import httpx
-from pydantic import BaseModel, parse_obj_as
+from pydantic import BaseModel
 
 from app.core.logging import get_logger
 
@@ -99,6 +98,12 @@ class RestClient:
         self.verify = verify
         self.retries = retries
 
+        # Log a warning if SSL verification is disabled
+        if not verify:
+            logger.warning(
+                "SSL verification is disabled. This is a security risk in production."
+            )
+
         # Set up default headers
         if "Content-Type" not in self.headers:
             self.headers["Content-Type"] = "application/json"
@@ -135,7 +140,7 @@ class RestClient:
 
     def _handle_response(
         self, response: httpx.Response, response_model: Optional[Type[ResponseType]] = None
-    ) -> Any:
+    ) -> Union[httpx.Response, None, ResponseType]:
         """
         Handle the response from an HTTP request.
 
@@ -364,6 +369,12 @@ class AsyncRestClient:
         self.verify = verify
         self.retries = retries
 
+        # Log a warning if SSL verification is disabled
+        if not verify:
+            logger.warning(
+                "SSL verification is disabled. This is a security risk in production."
+            )
+
         # Set up default headers
         if "Content-Type" not in self.headers:
             self.headers["Content-Type"] = "application/json"
@@ -408,7 +419,7 @@ class AsyncRestClient:
 
     async def _handle_response(
         self, response: httpx.Response, response_model: Optional[Type[ResponseType]] = None
-    ) -> Any:
+    ) -> Union[httpx.Response, None, ResponseType]:
         """
         Handle the response from an HTTP request.
 

@@ -8,7 +8,7 @@ The configuration adapts based on the environment (development vs. production).
 
 import logging  # Standard library logging module
 import sys  # For stdout access
-from typing import Any, Dict, Optional  # Type hints
+from typing import Optional  # Type hints
 
 # Structured logging library
 import structlog
@@ -56,6 +56,7 @@ def configure_logging() -> None:
 
     # In development, use a human-readable console formatter
     if settings.ENVIRONMENT == "development":
+        # Add console renderer for human-readable logs
         processors.append(structlog.dev.ConsoleRenderer())
     else:
         # In production, use JSON formatter for easier parsing by log aggregators

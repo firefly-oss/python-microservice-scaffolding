@@ -1,10 +1,10 @@
-"""
-Main application module for the FastAPI microservice.
+"""Main application module for the FastAPI microservice.
+
 This module initializes the FastAPI application, sets up middleware,
 configures logging, metrics, and registers API routes.
 """
 
-from typing import Dict, Any  # Standard library imports for type hints
+from typing import Dict  # Standard library imports for type hints
 
 # FastAPI framework imports
 from fastapi import FastAPI
@@ -31,18 +31,21 @@ app: FastAPI = FastAPI(
 # This function will be called when the application starts
 @app.on_event("startup")
 async def startup_event() -> None:
-    """
-    Startup event handler that runs when the application starts.
+    """Startup event handler that runs when the application starts.
+
     Used for initialization tasks like connecting to databases.
     """
-    logger.info("Starting up application", environment=settings.ENVIRONMENT)
+    logger.info(
+        "Starting up application",
+        environment=settings.ENVIRONMENT
+    )
 
 # Register shutdown event handler
 # This function will be called when the application shuts down
 @app.on_event("shutdown")
 async def shutdown_event() -> None:
-    """
-    Shutdown event handler that runs when the application stops.
+    """Shutdown event handler that runs when the application stops.
+
     Used for cleanup tasks like closing database connections.
     """
     logger.info("Shutting down application")
@@ -63,8 +66,8 @@ setup_metrics(app, settings.PROJECT_NAME, app.version)
 # Root endpoint - serves as a simple landing page for the API
 @app.get("/")
 def root() -> Dict[str, str]:
-    """
-    Root endpoint that returns a simple greeting message.
+    """Root endpoint that returns a simple greeting message.
+
     This can be used to verify that the API is running.
     """
     return {"message": "Hello World"}
@@ -73,16 +76,16 @@ def root() -> Dict[str, str]:
 
 @app.get("/health")
 def health_check() -> Dict[str, str]:
-    """
-    Health check endpoint for monitoring.
+    """Health check endpoint for monitoring.
+
     Returns a simple status to indicate the service is running.
     """
     return {"status": "ok"}
 
 @app.get("/health/readiness")
 def readiness_check() -> Dict[str, str]:
-    """
-    Readiness check endpoint for Kubernetes.
+    """Readiness check endpoint for Kubernetes.
+
     Indicates whether the service is ready to accept requests.
     This can include checks for database connections, etc.
     """
@@ -91,8 +94,8 @@ def readiness_check() -> Dict[str, str]:
 
 @app.get("/health/liveness")
 def liveness_check() -> Dict[str, str]:
-    """
-    Liveness check endpoint for Kubernetes.
+    """Liveness check endpoint for Kubernetes.
+
     Indicates whether the service is alive and functioning.
     Used by orchestration systems to determine if the service needs to be restarted.
     """

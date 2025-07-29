@@ -1,5 +1,5 @@
-"""
-Configuration module for the application.
+"""Configuration module for the application.
+
 This module defines application settings using Pydantic's BaseSettings,
 which allows for environment variable overrides and validation.
 """
@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     @validator("BACKEND_CORS_ORIGINS", pre=True)
     def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
         """
-        Validator for CORS origins that converts string input to a list.
+        Convert string input to a list for CORS origins.
 
         Args:
             v: The value to validate, either a comma-separated string or a list
@@ -56,7 +56,7 @@ class Settings(BaseSettings):
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
         """
-        Validator that builds a PostgreSQL connection URI from individual components.
+        Build a PostgreSQL connection URI from individual components.
 
         Args:
             v: The existing URI value, if any

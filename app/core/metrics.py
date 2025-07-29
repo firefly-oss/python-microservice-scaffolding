@@ -9,10 +9,12 @@ automatically record these metrics for each request.
 
 from prometheus_client import Counter, Histogram, Info  # Prometheus metric types
 import time  # For measuring request duration
-from typing import Any, Callable, Dict  # Type hints
+from typing import Callable  # Type hints
 
 from fastapi import FastAPI, Request, Response  # FastAPI components
-from prometheus_client import REGISTRY, generate_latest  # Prometheus registry and output generation
+from prometheus_client import (
+    REGISTRY, generate_latest  # Prometheus registry and output generation
+)
 
 # Define metrics
 # Counter: A cumulative metric that represents a single monotonically increasing counter
@@ -40,7 +42,7 @@ APP_INFO: Info = Info(
 
 def setup_metrics(app: FastAPI, app_name: str, app_version: str) -> None:
     """
-    Setup Prometheus metrics for the application.
+    Set up Prometheus metrics for the application.
 
     This function configures the application to expose Prometheus metrics
     and adds middleware to track request counts and latencies automatically.
