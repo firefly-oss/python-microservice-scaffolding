@@ -4,7 +4,7 @@
 [![Python](https://img.shields.io/badge/Python-3.9+-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
 [![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-red.svg?style=flat&logo=sqlalchemy&logoColor=white)](https://www.sqlalchemy.org)
 [![Pydantic](https://img.shields.io/badge/Pydantic-1.10-E92063.svg?style=flat&logo=pydantic&logoColor=white)](https://docs.pydantic.dev)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache-yellow.svg)](https://opensource.org/licenses/Apache)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache-yellow.svg)](https://opensource.org/license/apache-2-0)
 
 A production-ready FastAPI, Pydantic, and SQLAlchemy microservice template with built-in best practices for rapid development.
 
