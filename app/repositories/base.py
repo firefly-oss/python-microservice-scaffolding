@@ -103,7 +103,10 @@ class CRUDRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         skip: int = 0,
         limit: int = 100,
         with_pagination: bool = False
-    ) -> Union[List[ModelType], Tuple[List[ModelType], Dict[str, Any]]]:
+    ) -> Union[
+        List[ModelType],
+        Tuple[List[ModelType], Dict[str, Any]]
+    ]:
         """
         Filter records based on field values with pagination.
 
