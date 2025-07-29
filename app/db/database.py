@@ -20,7 +20,8 @@ from app.core.config import settings
 # It maintains a pool of connections to the database
 engine: Engine = create_engine(
     settings.SQLALCHEMY_DATABASE_URI,  # Database connection string from settings
-    pool_pre_ping=True  # Enables connection pool "pre-ping" feature that tests connections for liveness upon checkout
+    # Enables connection pool "pre-ping" feature that tests connections for liveness
+    pool_pre_ping=True
 )
 
 # Create a sessionmaker factory
@@ -38,9 +39,9 @@ Base = declarative_base()
 # FastAPI dependency for database sessions
 def get_db() -> Generator[Session, None, None]:
     """
-    FastAPI dependency that provides a SQLAlchemy session.
+    Provide a SQLAlchemy session as a FastAPI dependency.
 
-    This function creates a new SQLAlchemy Session that is used for a single request,
+    Creates a new SQLAlchemy Session that is used for a single request,
     and then closed once the request is finished.
 
     Yields:

@@ -9,7 +9,7 @@ from datetime import datetime  # For timestamp fields
 from typing import Any  # For type annotations
 
 # SQLAlchemy imports
-from sqlalchemy import Column, DateTime, Integer  # Column types
+from sqlalchemy import Column, DateTime, Integer, MetaData  # Column types and metadata
 from sqlalchemy.ext.declarative import as_declarative, declared_attr  # Declarative base functionality
 
 
@@ -29,6 +29,7 @@ class Base:
     # Type annotations for static type checking
     id: Any  # Primary key field
     __name__: str  # Class name, used for generating table name
+    metadata: MetaData  # SQLAlchemy metadata for table definitions
 
     # Generate __tablename__ automatically based on the class name
     @declared_attr

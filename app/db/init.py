@@ -32,7 +32,7 @@ def init() -> None:
 
 def main() -> None:
     """
-    Main entry point for database initialization.
+    Initialize the database as a standalone script.
 
     This function logs the initialization process and calls the init function
     to perform the actual database initialization.

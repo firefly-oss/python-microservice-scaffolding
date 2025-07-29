@@ -9,7 +9,6 @@ from sqlalchemy.orm import Session  # SQLAlchemy session for database operations
 
 # Application imports
 from app import repositories, schemas  # Repository operations and Pydantic schemas
-from app.core.config import settings  # Application settings
 from app.models import Base  # SQLAlchemy models base class
 from app.db.database import engine  # Database engine
 
