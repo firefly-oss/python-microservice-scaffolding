@@ -2,7 +2,7 @@
 Tests for the REST client module.
 """
 import json
-from typing import List, Optional
+from typing import AsyncGenerator, Generator, List
 from unittest.mock import MagicMock, patch
 
 import httpx
@@ -13,7 +13,7 @@ from app.core.rest_client import RestClient, RestClientError, AsyncRestClient
 
 
 class User(BaseModel):
-    """Test user model."""
+    """Test user model for REST client tests."""
     id: int
     name: str
     email: str
@@ -31,7 +31,7 @@ class TestRestClient:
         return response
 
     @pytest.fixture
-    def client(self) -> RestClient:
+    def client(self) -> Generator[RestClient, None, None]:
         """Create a REST client for testing."""
         with patch("httpx.Client") as mock_client:
             client = RestClient(base_url="https://api.example.com")
@@ -152,7 +152,7 @@ class TestAsyncRestClient:
         return response
 
     @pytest.fixture
-    async def client(self) -> AsyncRestClient:
+    async def client(self) -> AsyncGenerator[AsyncRestClient, None]:
         """Create an async REST client for testing."""
         with patch("httpx.AsyncClient") as mock_client:
             client = AsyncRestClient(base_url="https://api.example.com")

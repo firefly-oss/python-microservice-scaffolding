@@ -9,7 +9,7 @@ This module sets up the test environment, including:
 These fixtures are automatically used by pytest when running tests.
 """
 
-from typing import Generator, Dict, Any  # Type hints
+from typing import Generator  # Type hints
 
 # Testing imports
 import pytest  # Pytest framework
