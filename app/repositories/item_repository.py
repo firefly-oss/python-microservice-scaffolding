@@ -5,7 +5,7 @@ This module extends the base repository operations for the Item model,
 adding custom methods specific to Item entities.
 """
 
-from typing import Optional  # For optional return types
+from typing import Optional, cast  # For optional return types and type casting
 
 from sqlalchemy.orm import Session  # SQLAlchemy session for database operations
 
@@ -44,7 +44,8 @@ class ItemRepository(CRUDRepository[Item, ItemCreate, ItemUpdate]):
         Returns:
             The Item instance if found, None otherwise
         """
-        return db.query(self.model).filter(self.model.name == name).first()
+        result = db.query(self.model).filter(self.model.name == name).first()
+        return cast(Optional[Item], result)
 
 
 # Create a singleton instance of ItemRepository for use throughout the application
