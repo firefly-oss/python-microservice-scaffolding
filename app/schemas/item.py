@@ -88,11 +88,7 @@ class ItemInDBBase(ItemBase):
 
 
 class Item(ItemInDBBase):
-    """
-    Schema for Item responses returned to clients.
-
-    This schema includes complete data for API responses.
-    """
+    """Schema for Item responses returned to clients."""
     pass  # Uses all fields from ItemInDBBase
 
 
