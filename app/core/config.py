@@ -78,9 +78,7 @@ class Settings(BaseSettings):
         )
 
     class Config:
-        """
-        Pydantic configuration for the Settings class.
-        """
+        """Pydantic configuration for the Settings class."""
         case_sensitive = True  # Environment variable names are case-sensitive
         env_file = ".env"  # Load settings from .env file if present
 
