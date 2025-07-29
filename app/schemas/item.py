@@ -88,26 +88,10 @@ class ItemInDBBase(ItemBase):
 
 
 class Item(ItemInDBBase):
-    """
-    Schema for Item responses returned to clients.
-
-    This schema is used when sending item data back to clients.
-    It inherits all fields from ItemInDBBase with no modifications.
-
-    This represents the complete item data that clients should receive.
-    """
+    """Schema for Item responses returned to clients with complete data for API responses."""
     pass  # Uses all fields from ItemInDBBase
 
 
 class ItemInDB(ItemInDBBase):
-    """
-    Schema representing the Item exactly as stored in the database.
-
-    This schema is typically used for internal processing and not
-    directly exposed to clients. It can include additional fields
-    that are stored in the database but not returned to clients.
-
-    In this case, it's identical to ItemInDBBase, but it could be
-    extended with additional fields if needed.
-    """
+    """Schema representing the Item exactly as stored in the database for internal use."""
     pass  # Currently identical to ItemInDBBase, but could be extended

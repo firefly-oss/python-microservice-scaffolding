@@ -24,6 +24,10 @@ router: APIRouter = APIRouter()
 
 # Define a response model for paginated results
 class PaginatedItems(BaseModel):
+    """Response model for paginated item results.
+
+    Contains both the items and pagination metadata.
+    """
     items: List[schemas.Item]
     total: int
     skip: int
@@ -31,6 +35,7 @@ class PaginatedItems(BaseModel):
     has_more: bool
 
     class Config:
+        """Pydantic configuration for the PaginatedItems model."""
         orm_mode = True
 
 
@@ -78,7 +83,9 @@ def read_items(
     # Format response based on pagination flag
     if with_pagination:
         # Type assertion for mypy
-        items_and_pagination: tuple[list[schemas.Item], dict[str, Any]] = result  # type: ignore
+        items_and_pagination: tuple[
+            list[schemas.Item], dict[str, Any]
+        ] = result  # type: ignore
         items, pagination = items_and_pagination
         return {
             "items": items,
