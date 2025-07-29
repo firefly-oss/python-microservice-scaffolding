@@ -1,1 +1,6 @@
-# This file is intentionally left empty to make the directory a Python package
+"""
+API package for the microservice.
+
+This package contains all the API-related modules and subpackages,
+including API routers, endpoints, and versioning.
+"""

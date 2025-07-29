@@ -1,1 +1,6 @@
-# This file is intentionally left empty to make the directory a Python package
+"""
+Tests package for the microservice.
+
+This package contains all the test modules and fixtures for testing
+the functionality of the microservice.
+"""

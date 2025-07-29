@@ -8,4 +8,4 @@ and used throughout the application.
 
 from app.repositories.item_repository import item
 
-# Add all repository objects here for easy importing
+__all__ = ["item"]
