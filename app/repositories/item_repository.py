@@ -47,7 +47,9 @@ class ItemRepository(CRUDRepository[Item, ItemCreate, ItemUpdate]):
         return db.query(self.model).filter(self.model.name == name).first()
 
 
-# Create a singleton instance of ItemRepository to be imported and used throughout the application
+# Create a singleton instance of ItemRepository for use throughout the application
 # This follows the repository pattern where this instance serves as the interface
 # for all Item-related database operations
-item: ItemRepository = ItemRepository(Item)
+item: ItemRepository = ItemRepository(
+    Item
+)

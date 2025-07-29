@@ -34,7 +34,8 @@ def get_items(
 
     Returns:
         If with_pagination is False: List of items
-        If with_pagination is True: Tuple containing (list of items, pagination metadata)
+        If with_pagination is True: Tuple containing (list of items, 
+            pagination metadata)
     """
     if filters:
         return repositories.item.filter(

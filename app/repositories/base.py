@@ -6,7 +6,7 @@ used with any SQLAlchemy model and Pydantic schema. It implements common
 database operations to reduce code duplication across different models.
 """
 
-from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union, Tuple  # Type hints
+from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union, Tuple, cast  # Type hints
 
 # FastAPI and Pydantic imports
 from fastapi.encoders import jsonable_encoder  # For converting Pydantic models to JSON-compatible dict
@@ -55,7 +55,8 @@ class CRUDRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         Returns:
             The model instance if found, None otherwise
         """
-        return db.query(self.model).filter(self.model.id == id).first()
+        result = db.query(self.model).filter(self.model.id == id).first()
+        return cast(Optional[ModelType], result)
 
     def get_multi(
         self, db: Session, *, skip: int = 0, limit: int = 100, with_pagination: bool = False
@@ -90,13 +91,18 @@ class CRUDRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
                 "limit": limit,
                 "has_more": (total > skip + limit)
             }
-            return items, pagination
+            return cast(Tuple[List[ModelType], Dict[str, Any]], (items, pagination))
 
-        return items
+        return cast(List[ModelType], items)
 
     def filter(
-        self, db: Session, *, filters: Dict[str, Any], skip: int = 0, 
-        limit: int = 100, with_pagination: bool = False
+        self,
+        db: Session,
+        *,
+        filters: Dict[str, Any],
+        skip: int = 0,
+        limit: int = 100,
+        with_pagination: bool = False
     ) -> Union[List[ModelType], Tuple[List[ModelType], Dict[str, Any]]]:
         """
         Filter records based on field values with pagination.
@@ -138,9 +144,9 @@ class CRUDRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
                 "limit": limit,
                 "has_more": (total > skip + limit)
             }
-            return items, pagination
+            return cast(Tuple[List[ModelType], Dict[str, Any]], (items, pagination))
 
-        return items
+        return cast(List[ModelType], items)
 
     def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
         """
@@ -224,4 +230,4 @@ class CRUDRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db.delete(obj)
         db.commit()
 
-        return obj
+        return cast(ModelType, obj)
