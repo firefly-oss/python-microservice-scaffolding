@@ -1,6 +1,4 @@
-"""
-Tests for the REST client module.
-"""
+"""Tests for the REST client module."""
 import json
 from typing import AsyncGenerator, Generator, List
 from unittest.mock import MagicMock, patch
