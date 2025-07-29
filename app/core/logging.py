@@ -59,7 +59,7 @@ def configure_logging() -> None:
         # Add console renderer for human-readable logs
         processors.append(structlog.dev.ConsoleRenderer())
     else:
-        # In production, use JSON formatter for easier parsing by log aggregators
+        # In production, use JSON formatter for easier log parsing
         processors.append(structlog.processors.JSONRenderer())
 
     # Configure structlog with our processors and settings

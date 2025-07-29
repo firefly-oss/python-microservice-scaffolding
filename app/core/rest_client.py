@@ -51,6 +51,14 @@ class RestClientError(Exception):
     """Base exception for REST client errors."""
 
     def __init__(self, message: str, status_code: Optional[int] = None, response: Optional[httpx.Response] = None):
+        """
+        Initialize the RestClientError with error details.
+
+        Args:
+            message: The error message.
+            status_code: The HTTP status code, if applicable.
+            response: The HTTP response object, if available.
+        """
         self.message = message
         self.status_code = status_code
         self.response = response
@@ -121,7 +129,7 @@ class RestClient:
             transport=transport,
         )
 
-    def __del__(self):
+    def __del__(self) -> None:
         """Close the client when the object is deleted."""
         if hasattr(self, "client"):
             self.client.close()

@@ -11,7 +11,8 @@ from prometheus_client import Counter, Histogram, Info  # Prometheus metric type
 import time  # For measuring request duration
 from typing import Callable  # Type hints
 
-from fastapi import FastAPI, Request, Response  # FastAPI components
+# FastAPI components
+from fastapi import FastAPI, Request, Response
 from prometheus_client import (
     REGISTRY, generate_latest  # Prometheus registry and output generation
 )
