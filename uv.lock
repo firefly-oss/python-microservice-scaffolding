@@ -279,7 +279,7 @@ test = [
 
 [package.metadata.requires-dev]
 api = [
-    { name = "fastapi", specifier = ">=0.115.14" },
+    { name = "fastapi", specifier = ">=0.116.1" },
     { name = "python-multipart", specifier = ">=0.0.20" },
     { name = "pyyaml", specifier = ">=6.0.2" },
 ]

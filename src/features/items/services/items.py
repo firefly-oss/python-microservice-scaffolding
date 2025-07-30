@@ -1,9 +1,9 @@
-# src/services/items/controllers/items.py
+# src/features/items/services/items.py
 # =======================================================================
 # 📝 FILE OVERVIEW
 # =======================================================================
 """
-This module contains the business logic (controllers) for the items service.
+This module contains the business logic (services) for the items service.
 
 It interacts with the database to perform CRUD operations on items.
 """
@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 # =======================================================================
-# 🚀 2. CONTROLLER FUNCTIONS
+# 🚀 2. SERVICE FUNCTIONS
 # =======================================================================
 def create_item(item_in: ItemCreate, session: Session) -> Item:
     """

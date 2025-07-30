@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 # pytest will automatically discover and inject the 'client' fixture from conftest.py
 # client = TestClient(app) # No longer needed here
 
+
 def test_create_and_get_item(client: TestClient):
     """
     Test creating a new item and then retrieving it.

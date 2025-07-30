@@ -3,10 +3,10 @@ from typing import Generator
 
 import pytest
 from fastapi.testclient import TestClient
-from sqlmodel import create_engine, Session, SQLModel
+from sqlmodel import create_engine, Session
 
-from src.fastapi.api_handler import app
-from src.database.database import get_session, create_db_and_tables, drop_db_and_tables
+from src.core.fastapi.api_handler import app
+from src.core.database.database import get_session, create_db_and_tables, drop_db_and_tables
 
 # Use a separate database for testing
 TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "postgresql://user:password@localhost:5432/test_db")
@@ -14,10 +14,12 @@ TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "postgresql://user:password@l
 # Create a test engine for the module
 test_engine = create_engine(TEST_DATABASE_URL, echo=True)
 
+
 @pytest.fixture(name="session")
 def session_fixture() -> Generator[Session, None, None]:
     with Session(test_engine) as session:
         yield session
+
 
 @pytest.fixture(name="client")
 def client_fixture(session: Session):
@@ -28,6 +30,7 @@ def client_fixture(session: Session):
     yield TestClient(app)
     app.dependency_overrides.clear()
 
+
 def pytest_sessionstart(session):
     """
     Called once before the entire test session starts.
@@ -35,6 +38,7 @@ def pytest_sessionstart(session):
     print(f"\nSetting up test database with URL: {TEST_DATABASE_URL}")
     drop_db_and_tables(test_engine)
     create_db_and_tables(test_engine)
+
 
 def pytest_sessionfinish(session):
     """

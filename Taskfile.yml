@@ -42,8 +42,12 @@ tasks:
     cmds:
       - black .
 
+  generate-openapi:
+    desc: "Generate OpenAPI YAML from FastAPI application"
+    cmds:
+      - python scripts/generate_openapi.py
+
   run-api:
     desc: "Run the FastAPI server with uvicorn"
     cmds:
-      - uv run python scripts/combine_openapi.py
       - uvicorn src.fastapi.api_handler:app --reload

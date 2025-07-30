@@ -1,4 +1,4 @@
-# src/services/items/routers/items.py
+# src/features/items/controllers/items.py
 # =======================================================================
 # 📝 FILE OVERVIEW
 # =======================================================================
@@ -17,8 +17,8 @@ from typing import List
 from fastapi import APIRouter, HTTPException, status, Depends
 from sqlmodel import Session  # Import Session
 from ..models.items import ItemCreate, ItemRead  # Import ItemRead
-from ..controllers import items as items_controller
-from src.database.database import get_session  # Import get_session
+from ..services import items as items_service
+from src.core.database.database import get_session  # Import get_session
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +47,7 @@ def create_new_item(item_in: ItemCreate, session: Session = Depends(get_session)
     """
     logger.info("Received request to create a new item.")
     try:
-        created_item = items_controller.create_item(item_in, session)  # Pass session to controller
+        created_item = items_service.create_item(item_in, session)  # Pass session to controller
         return created_item
     except Exception as e:
         logger.error(f"An unexpected error occurred while creating an item: {e}")
@@ -64,7 +64,7 @@ def get_single_item(item_id: int, session: Session = Depends(get_session)):
     """
     logger.info(f"Received request to get item with ID: {item_id}")
     try:
-        item = items_controller.get_item(item_id, session)  # Pass session to controller
+        item = items_service.get_item(item_id, session)  # Pass session to controller
         if item is None:
             logger.warning(f"Item with ID {item_id} not found in router.")
             raise HTTPException(
@@ -90,7 +90,7 @@ def get_all_items(session: Session = Depends(get_session)):
     """
     logger.info("Received request to get all items.")
     try:
-        items = items_controller.get_all_items(session)
+        items = items_service.get_all_items(session)
         return items
     except Exception as e:
         logger.error(f"An unexpected error occurred while retrieving all items: {e}")

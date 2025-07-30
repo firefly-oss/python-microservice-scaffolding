@@ -1,4 +1,4 @@
-# src/services/health/routers/health.py
+# src/features/health/controllers/health.py
 # =======================================================================
 # 📝 FILE OVERVIEW
 # =======================================================================
@@ -17,7 +17,7 @@ from pathlib import Path
 
 from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
-from ..controllers import health as health_controller
+from ..services import health as health_service
 
 from src.utils.constants import FINAL_OPENAPI_PATH
 
@@ -45,7 +45,7 @@ async def get_health_status_endpoint(request: Request):
     status and returns it in a JSON response.
     """
     # Retrieve the status from the controller.
-    version, error = health_controller.get_health_status()
+    version, error = health_service.get_health_status()
 
     # The controller currently returns version information on success.
     if version is not None:

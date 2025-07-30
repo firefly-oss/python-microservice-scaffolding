@@ -1,4 +1,4 @@
-# src/fastapi/api_handler.py
+# src/core/fastapi/api_handler.py
 # =======================================================================
 # 📝 FILE OVERVIEW
 # =======================================================================
@@ -18,9 +18,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from src.services.health.routers.health import router as health_router
-from src.services.items.routers.items import router as items_router
-from src.database.database import create_db_and_tables  # Import the new function
+from src.features.health.controllers.health import router as health_router
+from src.features.items.controllers.items import router as items_router
+from src.core.database.database import create_db_and_tables  # Import the new function
 from src.utils.logging import configure_logging
 
 # Configure logging
@@ -46,7 +46,7 @@ async def lifespan(app: FastAPI):
     logger.info("Application shutdown.")
 
 
-def create_app(routers: list) -> FastAPI:
+def create_app(controllers: list) -> FastAPI:
     """
     Creates and configures a new FastAPI application instance.
 
@@ -65,8 +65,8 @@ def create_app(routers: list) -> FastAPI:
         logger=logger,
     )
 
-    for router in routers:
-        app.include_router(router)
+    for controller in controllers:
+        app.include_router(controller)
 
     app.add_middleware(
         CORSMiddleware,
@@ -84,4 +84,4 @@ def create_app(routers: list) -> FastAPI:
 # =======================================================================
 # Create the main FastAPI application instance by aggregating all the
 # service routers.
-app = create_app(routers=[health_router, items_router])
+app = create_app(controllers=[health_router, items_router])

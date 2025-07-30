@@ -1,9 +1,9 @@
-# src/api/services/health/controllers/health.py
+# src/api/features/health/services/health.py
 # =======================================================================
 # 📝 FILE OVERVIEW
 # =======================================================================
 """
-This module contains the controller for the health check service.
+This module contains the service logic for the health check service.
 
 It provides the core logic for the health check endpoint, returning the
 current API version to indicate that the service is operational.
@@ -21,13 +21,13 @@ API_VERSION: str = os.getenv("API_VERSION", "0.0.0")
 
 
 # =======================================================================
-# 🚀 2. CONTROLLER FUNCTION
+# 🚀 2. SERVICE FUNCTION
 # =======================================================================
 def get_health_status() -> Tuple[str, Optional[None]]:
     """
     Provides the health status of the API.
 
-    This controller function currently returns the API version and a None
+    This service function currently returns the API version and a None
     value, adhering to a simple success-tuple format. In the future, it
     could be expanded to check dependencies like databases or other services.
 
