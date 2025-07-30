@@ -1,0 +1,30 @@
+openapi: 3.0.3
+
+info:
+  title: FastAPI Scaffold API
+  description: >
+    Generic OpenAPI specification for scaffolding a FastAPI application.
+    Fill in the paths, schemas, and security details as needed.
+  version: 0.1.0
+  contact:
+    name: API Support
+    email: support@example.com
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+  - url: https://api.example.com
+    description: Production server
+
+paths: {}
+
+components:
+  #securitySchemes:
+  #  bearerAuth:
+  #    type: http
+  #    scheme: bearer
+  #    bearerFormat: JWT
+
+  schemas: {}
+
+tags: []

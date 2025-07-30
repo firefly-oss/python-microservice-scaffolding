@@ -1,71 +1,42 @@
-[tool.poetry]
-name = "microservice-scaffolding"
+[project]
+# 📦 Project metadata
+name = "fastpi-project"
 version = "0.1.0"
-description = "A FastAPI, Pydantic, SQLAlchemy microservice scaffolding"
-authors = ["Your Name <your.email@example.com>"]
-
-[tool.poetry.dependencies]
-python = "^3.9"
-fastapi = "^0.68.0"
-uvicorn = "^0.15.0"
-sqlalchemy = "^1.4.23"
-pydantic = "^1.8.2"
-alembic = "^1.7.1"
-psycopg2-binary = "^2.9.1"
-python-dotenv = "^0.19.0"
-httpx = "^0.24.1"
-setuptools = "<68.0.0"
-
-[tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
-black = "^21.8b0"
-isort = "^5.9.3"
-flake8 = "^3.9.2"
-mypy = "^0.910"
-pytest-cov = "^2.12.1"
-pre-commit = "^3.3.2"
-bandit = "^1.7.5"
-safety = "^2.3.5"
-sphinx = "^7.0.1"
-sphinx-rtd-theme = "^1.2.1"
-prometheus-client = "^0.17.0"
-structlog = "^23.1.0"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires-python = ">=3.12"
+# 🔗 Core runtime dependencies (minimal required for app)
+dependencies = []
 
 [tool.black]
-line-length = 88
-target-version = ['py39']
-include = '\.pyi?$'
-
-[tool.isort]
-profile = "black"
-multi_line_output = 3
-
-[tool.bandit]
-exclude_dirs = ["tests", "docs"]
-skips = ["B101"]
+line-length = 110
 
 [tool.flake8]
-max-line-length = 88
-extend-ignore = "E203"
-exclude = [".git", "__pycache__", "build", "dist"]
+max-line-length = 110
+exclude = [".venv"]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = "test_*.py"
-addopts = "--cov=app --cov-report=term-missing --cov-report=xml"
+[dependency-groups]
+api = [
+  "fastapi>=0.115.14",
+  "python-multipart>=0.0.20",
+  "pyyaml>=6.0.2",
+]
 
-[tool.mypy]
-python_version = "3.9"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
+db = [
+  "sqlmodel>=0.0.20",
+  "psycopg2-binary>=2.9.9",
+  "python-dotenv>=1.0.1",
+]
 
-[[tool.mypy.overrides]]
-module = "tests.*"
-disallow_untyped_defs = false
-disallow_incomplete_defs = false
+test = [
+  "black",
+  "flake8",
+  "flake8-pyproject",
+  "autopep8",
+  "pytest",
+  "uvicorn",
+  "schemathesis==4.0.3",
+  "prance==25.4.8.0",
+  "openapi-spec-validator==0.7.2",
+  "pytest-cov>=6.2.1",
+  "isort",
+  "mypy"
+]

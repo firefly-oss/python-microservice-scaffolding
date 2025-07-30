@@ -1,0 +1,49 @@
+version: "3"
+
+# Define default variables, which can be overridden at runtime
+vars:
+  GROUP: ""
+  VENV: .venv
+
+tasks:
+  # Default task that lists available tasks
+  default:
+    cmds:
+      - task --list
+    silent: true
+
+  install:
+    desc: Create virtual environment and sync Python dependencies
+    cmds:
+      - npm install
+      - uv venv
+      - uv sync --all-groups
+
+  test:
+    desc: Run pytest with coverage report on the src folder
+    cmds:
+      # Run all tests, measure coverage on your package
+      - pytest --cov=src --cov-report=html tests
+      # open the coverage html with a serve command
+      - |
+        echo
+        echo "✅ Coverage HTML generated in ./htmlcov/index.html"
+        echo "👉 To view it, run:"
+        echo "npx serve htmlcov"
+
+  lint:
+    desc: "Run linters (flake8) and formatters (black, isort) in check mode"
+    cmds:
+      - black --check .
+      - flake8 src tests
+
+  format:
+    desc: "Format code using black and isort"
+    cmds:
+      - black .
+
+  run-api:
+    desc: "Run the FastAPI server with uvicorn"
+    cmds:
+      - uv run python scripts/combine_openapi.py
+      - uvicorn src.fastapi.api_handler:app --reload

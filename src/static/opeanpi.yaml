@@ -1,0 +1,244 @@
+openapi: 3.0.3
+info:
+  title: FastAPI Scaffold API
+  description: 'Generic OpenAPI specification for scaffolding a FastAPI application.
+    Fill in the paths, schemas, and security details as needed.
+
+    '
+  version: 0.1.0
+  contact:
+    name: API Support
+    email: support@example.com
+servers:
+- url: http://localhost:8000
+  description: Local development server
+- url: https://api.example.com
+  description: Production server
+tags: []
+paths:
+  /health:
+    get:
+      summary: Simple GET
+      description: 'Returns a simple health check response to ensure the API is up
+        and running.
+
+        '
+      responses:
+        '200':
+          description: DIA retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/healthGetResponse'
+      tags:
+      - health
+  /openapi:
+    get:
+      summary: Download OpenAPI YAML
+      description: 'Serves the pre-built OpenAPI YAML file for developers or API Gateway
+        import.
+
+        '
+      responses:
+        '200':
+          description: The OpenAPI spec in YAML format
+          content:
+            application/x-yaml:
+              schema:
+                type: string
+      tags:
+      - health
+  /items:
+    get:
+      summary: List all items
+      description: Retrieves a list of dummy items.
+      responses:
+        '200':
+          description: Items retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+      tags:
+      - items
+    post:
+      summary: Create a new item
+      description: Creates a new dummy item and returns it.
+      requestBody:
+        description: Item to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemCreate'
+      responses:
+        '201':
+          description: Item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+      tags:
+      - items
+  /items/{itemId}:
+    get:
+      summary: Get item by ID
+      description: Retrieves a single item by its ID.
+      parameters:
+      - name: itemId
+        in: path
+        description: ID of the item to retrieve
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Item retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: Item not found
+      tags:
+      - items
+    put:
+      summary: Update an existing item
+      description: Updates the details of an existing item by ID.
+      parameters:
+      - name: itemId
+        in: path
+        description: ID of the item to update
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Updated item payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemUpdate'
+      responses:
+        '200':
+          description: Item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: Item not found
+      tags:
+      - items
+    delete:
+      summary: Delete an item
+      description: Deletes an existing item by its ID.
+      parameters:
+      - name: itemId
+        in: path
+        description: ID of the item to delete
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Item deleted successfully
+        '404':
+          description: Item not found
+      tags:
+      - items
+components:
+  schemas:
+    healthGetResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Health status message
+          example: ok
+        version:
+          type: string
+          description: Version of the service
+          example: 1.0.0
+      required:
+      - status
+      example:
+        status: ok
+    Item:
+      type: object
+      description: A full representation of an item.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the item.
+        name:
+          type: string
+          description: Name of the item.
+        description:
+          type: string
+          description: Detailed description of the item.
+        price:
+          type: number
+          format: float
+          description: Price of the item.
+        tags:
+          type: array
+          description: Tags associated with the item.
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the item was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the item was last updated.
+      required:
+      - id
+      - name
+      - price
+    ItemCreate:
+      type: object
+      description: Payload for creating a new item.
+      properties:
+        name:
+          type: string
+          description: Name of the item.
+        description:
+          type: string
+          description: Detailed description of the item.
+        price:
+          type: number
+          format: float
+          description: Price of the item.
+        tags:
+          type: array
+          description: Tags to assign to the item.
+          items:
+            type: string
+      required:
+      - name
+      - price
+    ItemUpdate:
+      type: object
+      description: Payload for updating an existing item. All fields are optional.
+      properties:
+        name:
+          type: string
+          description: Updated name of the item.
+        description:
+          type: string
+          description: Updated description of the item.
+        price:
+          type: number
+          format: float
+          description: Updated price of the item.
+        tags:
+          type: array
+          description: Updated tags for the item.
+          items:
+            type: string

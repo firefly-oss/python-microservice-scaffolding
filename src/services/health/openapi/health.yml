@@ -1,0 +1,32 @@
+openapi: 3.0.3
+info:
+  title: Partial OpenAPI definition
+  description: "Only edit and modify the paths, everything else is not deployed"
+  version: 1.0.0
+
+paths:
+  /health:
+    get:
+      summary: Simple GET
+      description: >
+        Returns a simple health check response to ensure the API is up and running.
+      responses:
+        "200":
+          description: DIA retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/components/schemas/healthGetResponse"
+
+  /openapi:
+    get:
+      summary: Download OpenAPI YAML
+      description: >
+        Serves the pre-built OpenAPI YAML file for developers or API Gateway import.
+      responses:
+        "200":
+          description: The OpenAPI spec in YAML format
+          content:
+            application/x-yaml:
+              schema:
+                type: string

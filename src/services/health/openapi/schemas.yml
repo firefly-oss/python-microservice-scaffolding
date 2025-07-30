@@ -1,0 +1,17 @@
+components:
+  schemas:
+    healthGetResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Health status message
+          example: "ok"
+        version:
+          type: string
+          description: Version of the service
+          example: "1.0.0"
+      required:
+        - status
+      example:
+        status: "ok"
