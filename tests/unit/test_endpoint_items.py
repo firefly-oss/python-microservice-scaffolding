@@ -1,11 +1,9 @@
-# tests/unit/test_endpoint_items.py
 from fastapi.testclient import TestClient
 
-from src.fastapi.api_handler import app
+# pytest will automatically discover and inject the 'client' fixture from conftest.py
+# client = TestClient(app) # No longer needed here
 
-client = TestClient(app)
-
-def test_create_and_get_item():
+def test_create_and_get_item(client: TestClient):
     """
     Test creating a new item and then retrieving it.
     """
@@ -37,7 +35,7 @@ def test_create_and_get_item():
     assert retrieved_item["description"] == item_data["description"]
 
 
-def test_get_item_not_found():
+def test_get_item_not_found(client: TestClient):
     """
     Test retrieving an item that does not exist.
     """
@@ -50,12 +48,12 @@ def test_get_item_not_found():
     assert response.json() == {"detail": f"Item with ID {non_existent_id} not found."}
 
 
-def test_create_item_invalid_payload():
+def test_create_item_invalid_payload(client: TestClient):
     """
     Test creating an item with an invalid payload (e.g., missing required field).
     """
     # Payload is missing the required 'name' field
-    invalid_data = {"description": "This item is missing a name."}
+    invalid_data = {"description": "This item is missing a name.", "priority": 0}
     headers = {"Content-Type": "application/json"}
 
     response = client.post("/items/", json=invalid_data, headers=headers)

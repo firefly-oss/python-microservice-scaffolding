@@ -1,27 +1,45 @@
+import os
 from typing import Generator
 
 from sqlmodel import create_engine, Session, SQLModel
-from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
+import logging
+from src.utils.logging import configure_logging
 
-DATABASE_URL = "sqlite:///./sql_app.db"
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./sql_app.db")
 
-# SQLite engine for development
-# For PostgreSQL, it would be:
-# postgres_url = "postgresql://user:password@host:port/database"
-# engine = create_engine(postgres_url)
+# Configure logging
+configure_logging()
+logger = logging.getLogger(__name__)
 
-engine = create_engine(DATABASE_URL, echo=True)
+_engine = None
+
+def get_engine():
+    global _engine
+    if _engine is None:
+        logger.info(f"Initializing database engine with URL: {DATABASE_URL}")
+        _engine = create_engine(DATABASE_URL, echo=True)
+    return _engine
 
 
-def create_db_and_tables():
+def create_db_and_tables(eng=None):
     """
     Creates all database tables defined by SQLModel metadata.
     This function is typically used for initial setup or testing.
     """
-    SQLModel.metadata.create_all(engine)
+    if eng is None:
+        eng = get_engine()
+    SQLModel.metadata.create_all(eng)
+
+
+def drop_db_and_tables(eng=None):
+    """
+    Drops all database tables defined by SQLModel metadata.
+    This function is typically used for cleaning up test environments.
+    """
+    if eng is None:
+        eng = get_engine()
+    SQLModel.metadata.drop_all(eng)
 
 
 def get_session() -> Generator[Session, None, None]:
@@ -31,5 +49,5 @@ def get_session() -> Generator[Session, None, None]:
     Yields:
         Session: A SQLAlchemy session object.
     """
-    with Session(engine) as session:
+    with Session(get_engine()) as session:
         yield session
